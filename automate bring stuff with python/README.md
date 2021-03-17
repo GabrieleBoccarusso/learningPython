@@ -14,3 +14,7 @@
 <br> add a star in front of each line making a list.
 <br> There is no way to give input but may bu useful
 <br> in the future as starting point,
+
+- tablePrinter.py: exercise project made for 'automate boring stuff with python (second edition)'.
+<br> it prints a table with right spacing between words.
+<br> My solution is not so great :/
