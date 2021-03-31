@@ -1,0 +1,31 @@
+'''
+attempt at trying to do a regex for italian phone numbers.
+It is not perfect and doesn't work good, but it's a good starting point.
+I've dropped it because it doesn't seem so useful for practical uses
+Gabriele Boccarusso
+03.31.2021 - dd-mm-yyyy
+'''
+
+regex = '(\+\d{1,3}(\s|-|())((\d{9,10})|(\d{3}(\s|-)\d{3}(\s|-)\d{3,4})|(\d{3,4}(\s|-)\d{6,7}))'
+betterRegex = '(\+\d{1,3})(\s|-|())((\d{3}(\s|-|())\d{3}(\s|-|())\d{3,4})|(\d{3,4}(\s|-)\d{6,7}))'
+this matches all the following cases:
+test cases:
++39-123-456-7890
++39 123 456 7890
++39 1234567890
++39 123 4567890
++39 123 456789
++39 123 4567890
++39 1234 567890
++391234567890
++39123456789
+
+'''
+(\+\d{1,3}\s|-|())
+((\d{3}(\s|-|())\d{3}(\s|-|())\d{3,4})|
+(\d{3,4}(\s|-)\d{6,7}))
+
+(\d{3}|\(\d{3}\))?
+
+(\+\d{2}\s) # prefix
+(\s|-)? # separator
