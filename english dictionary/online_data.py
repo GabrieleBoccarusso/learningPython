@@ -30,10 +30,11 @@ def main() -> int:
         word = input("enter a word: ")
 
         results = fetch(word)
-        for i,result in enumerate(results):
-            print("definition", i+1, ":", result[1])
-        
-
+        if results == []:
+            print("this word isn't in the dictionary") 
+        else:
+            for i,result in enumerate(results):
+                print("definition", i+1, ":", result[1])
         
         # repeting the loop or exiting the program
         loop = input("do you want to enter another word? ")
