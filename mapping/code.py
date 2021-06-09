@@ -36,6 +36,11 @@ for i in range(len(lat)):
                                     fill = True,
                                     fill_opacity = 1))
 
+fg.add_child(folium.GeoJson(data = open("mapping-data/world.json", 'r', encoding = "utf-8-sig").read(),
+                            style_function=lambda x: {'fillColor':'green' if x['properties']['POP2005'] < 10000000
+else 'orange' if 10000000 <= x['properties']['POP2005'] < 20000000 else 'red'}))
+
 map.add_child(fg)
+map.add_child(folium.LayerControl())
 
 map.save("map.html")
