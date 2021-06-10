@@ -13,28 +13,36 @@ def create_table():
     # commit the changes
     conn.commit()
 
-    # close the connection
-    conn.close()
+    return conn, cur
 
-def insert(item, quantity, price): 
-    conn = sqlite3.connect("data/lite.db")
-    cur = conn.cursor()
+def insert(conn, cur, item, quantity, price): 
+    # conn = sqlite3.connect("data/lite.db")
+    # cur = conn.cursor()
     cur.execute(f"INSERT INTO Store VALUES (?,?,?)", (item, quantity, price))
     conn.commit()
-    conn.close()
+    # conn.close()
 
-def view():
-    conn = sqlite3.connect("data/lite.db")
-    cur = conn.cursor()
+def view(cur):
+    # conn = sqlite3.connect("data/lite.db")
+    # cur = conn.cursor()
     cur.execute("SELECT * FROM Store")
     rows = cur.fetchall()
-    conn.close()
+    # conn.close()
     return rows
 
-create_table()
-
-insert("Cup", 50, 1.1)
-
-print(view())
-
 # note: there is a better way than establishing a connection and creating a cursor every time?
+
+def main():
+    conn, cur = create_table()
+
+    item = input("enter item name: ")
+    quantity = input("enter quantity: ")
+    price = input("enter price: ")
+
+    insert(conn, cur, item, quantity, price)
+
+    print(view(cur))
+
+    conn.close()
+
+main()
