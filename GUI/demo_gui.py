@@ -13,7 +13,7 @@ window = Tk()
 b1 = Button(master = window, text = "km to miles", command = km_to_miles)
 b1.grid(row = 0, column = 0)
 
-b2 = Button(master = window, text = "nothig")
+b2 = Button(master = window, text = "nothing")
 b2.grid(row = 0, column = 1)
 
 e1_value = StringVar()
