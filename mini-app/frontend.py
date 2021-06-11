@@ -13,6 +13,9 @@ close
 '''
 
 from tkinter import *
+from backend import * # custom py file
+
+db = database_manager()
 
 # GUI
 window = Tk()
