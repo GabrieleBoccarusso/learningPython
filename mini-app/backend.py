@@ -24,6 +24,14 @@ class database_manager():
         self.cursor.execute("SELECT * FROM Books")
         return self.cursor.fetchall()
 
-
-db = database_manager()
-db.insert("a", "juan", 0, 5232)
+    def search(self, title = '', author = '', year = '', isbn = ''):
+        self.cursor.execute("SELECT * FROM Books WHERE title = ? OR author = ? OR year = ? OR isbn = ?", (title, author, year, isbn))
+        return self.cursor.fetchall()
+    
+    def delete(self, id):
+        self.cursor.execute("DELETE FROM Books WHERE id = ?", (id,))
+        self.connector.commit()
+    
+    def update(self, id, title, author, year, isbn):
+        self.cursor.execute("UPDATE Books SET title = ?, author = ?, year = ?, isbn = ?", (title, author, year, isbn, id))
+        self.connector.commit()
