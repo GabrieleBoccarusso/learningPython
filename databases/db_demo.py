@@ -26,15 +26,10 @@ def create_table():
     return conn, cur
 
 def insert(conn, cur, item, quantity, price): 
-    # conn = sqlite3.connect("data/lite.db")
-    # cur = conn.cursor()
     cur.execute(f"INSERT INTO Store VALUES (?,?,?)", (item, quantity, price))
     conn.commit()
-    # conn.close()
 
 def view(cur):
-    # conn = sqlite3.connect("data/lite.db")
-    # cur = conn.cursor()
     cur.execute("SELECT * FROM Store")
     return cur.fetchall()
 

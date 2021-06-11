@@ -3,7 +3,6 @@ exercise:
 Create a Python program that expects a kilogram input 
 value and converts that value to grams, pounds, and ounces
 when the user pushes the Convert button
-
 Gabriele Boccarusso 2021.06.10 - yyyy.mm.dd
 '''
 
