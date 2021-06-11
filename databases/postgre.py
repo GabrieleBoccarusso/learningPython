@@ -13,18 +13,12 @@ def justify(string): # see 1
 def create_table():
     conn = psycopg2.connect("dbname='PyDatabase' user='postgres' password='root' host='localhost' port='5432'")
     cur = conn.cursor()
-
-    # execute the query
     cur.execute("CREATE TABLE IF NOT EXISTS Store (item TEXT, quantity INTEGER, price REAL)")
-
-    # commit the changes
     conn.commit()
 
     return conn, cur
 
 def insert(conn, cur, item, quantity, price): 
-    # cur.execute(f"INSERT INTO Store VALUES (?,?,?)", (item, quantity, price))
-    # cur.execute("INSERT INTO Store VALUES (%s,%s,%s)" % (item,quantity,price))
     cur.execute(f"INSERT INTO Store VALUES ({justify(item)},{quantity},{price})")
     conn.commit()
 
