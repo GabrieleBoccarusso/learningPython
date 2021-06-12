@@ -35,3 +35,7 @@ class database_manager():
     def update(self, id, title, author, year, isbn):
         self.cursor.execute("UPDATE Books SET title = ?, author = ?, year = ?, isbn = ?", (title, author, year, isbn, id))
         self.connector.commit()
+
+    def close(self):
+        self.connector.close() # closing the connection to the server
+                               # before destroying the class
