@@ -1,8 +1,13 @@
-import sqlite3
+from sqlite3 import connect
+# import os
+from os.path import isdir
+from os import mkdir
 
 class database_manager():
     def __init__(self):
-        self.connector = sqlite3.connect("data/database_file.db")
+        if not isdir("data"):
+            mkdir("data")
+        self.connector = connect("data/database_file.db")
         self.cursor = self.connector.cursor()
 
         # create the table
@@ -33,7 +38,7 @@ class database_manager():
         self.connector.commit()
     
     def update(self, id, title, author, year, isbn):
-        self.cursor.execute("UPDATE Books SET title = ?, author = ?, year = ?, isbn = ?", (title, author, year, isbn, id))
+        self.cursor.execute("UPDATE Books SET title = ?, author = ?, year = ?, isbn = ? WHERE id = ?", (title, author, year, isbn, id))
         self.connector.commit()
 
     def close(self):

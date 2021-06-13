@@ -18,19 +18,34 @@ from backend import * # custom py file
 db = database_manager()
 
 def get_selected_row(event):
-    global id_to_del
-    index = book_list.curselection()
-    id_to_del = book_list.get(index)[0]
+    try:
+        global selected_tuple
+        index = book_list.curselection()[0]
+        selected_tuple = book_list.get(index)
+
+        # putting the selected row information in the entries
+        entry_title.delete(0, END)
+        entry_title.insert(END, selected_tuple[1])
+
+        entry_author.delete(0, END)
+        entry_author.insert(END, selected_tuple[2])
+        
+        entry_year.delete(0, END)
+        entry_year.insert(END, selected_tuple[3])
+        
+        entry_ISBN.delete(0, END)
+        entry_ISBN.insert(END, selected_tuple[4])
+    except:
+        pass
 
 def delete_command():
-    db.delete(id_to_del)
-    view_command()
+    db.delete(selected_tuple[0])
 
 
 def view_command():
     book_list.delete(0, END)
     for i, row in enumerate(db.view()):
-        book_list.insert(i, row) # with row[1:] we dont' output the id
+        book_list.insert(i, row) # note: with row[1:] we dont' output the id
 
 def search_command():
     book_list.delete(0, END)
@@ -40,16 +55,29 @@ def search_command():
                                       author = entry_author.get(),
                                       year = entry_year.get(),
                                       isbn = entry_ISBN.get() ) ):
-        book_list.insert(i, row[1:])
+        book_list.insert(i, row)
     
 def add_command():
     db.insert(title = entry_title.get(),
-           author = entry_author.get(),
-           year = entry_year.get(),
-           isbn = entry_ISBN.get())
+              author = entry_author.get(),
+              year = entry_year.get(),
+              isbn = entry_ISBN.get())
+
+def update_command():
+    db.update(id = selected_tuple[0],
+              title = entry_title.get(),
+              author = entry_author.get(),
+              year = entry_year.get(),
+              isbn = entry_ISBN.get())
+            
+def close_program_command():
+    db.close()
+    window.destroy()
 
 # GUI
 window = Tk()
+
+window.wm_title("book store")
 
 # start entry widget
 entry_title = Entry(window, width = 15)
@@ -94,13 +122,13 @@ search_entry_button.grid(row = 4, column = 3)
 add_entry_button = Button(window, text = "add entry", command = add_command)
 add_entry_button.grid(row = 5, column = 3)
 
-update_button = Button(window, text = "update")
+update_button = Button(window, text = "update", command = update_command)
 update_button.grid(row = 6, column = 3)
 
 delete_button = Button(window, text = "delete", command = delete_command)
 delete_button.grid(row = 7, column = 3)
 
-close_button = Button(window, text = "close")
+close_button = Button(window, text = "close", command = close_program_command)
 close_button.grid(row = 8, column = 3)
 
 window.mainloop()
