@@ -1,30 +1,39 @@
-'''
-this program find the least common multiple
-between two number by brute force
-Gabriele Boccarusso 2021.06.13
-'''
+def verify_lcm(arr, lcm):
+    found = True
+    for i, n in enumerate(arr):
+        if lcm % n != 0:
+            found = False
+    
+    return found
 
-n1 = int(input("1:"))
-n2 = int(input("2:"))
+def find_greater(arr):
+    greater = arr[0]
+    for i, n in enumerate(arr):
+        if n > greater:
+            greater = n
+    return greater
 
-# identify which number is greater
-if n2 > n1:
-    greater = n2
-    smaller = n1
-else:
-    greater = n1
-    smaller = n2
+def get_numbers():
+    ret_arr = []
+    iters = input("how many number do you want to enter: ")
+    
+    for i in range(int(iters)):
+        n = int(input("enter number: "))
+        ret_arr.append(n)
 
-orig_sm = smaller
-orig_gr = greater
+    return ret_arr
 
+numbers = get_numbers()
 
-while greater != smaller:
-    if greater > smaller:
-        smaller += orig_sm
-        # print("smal", smaller)
-    elif smaller > greater:
-        greater += orig_gr
-        # print("gret", greater)
+greater = find_greater(numbers)
 
-print(greater)
+lcm = greater
+
+found = False
+
+while not found:
+    lcm += greater
+
+    found = verify_lcm(numbers, lcm)
+
+print(lcm)
