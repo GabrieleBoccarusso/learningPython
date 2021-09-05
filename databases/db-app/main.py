@@ -19,6 +19,17 @@ cur.execute("""CREATE TABLE IF NOT EXISTS addresses (
 		zipcode integer
 		)""")
 
+# create delete record function for db
+def delete():
+    conn = sqlite3.connect("address_book.db")
+    cur = conn.cursor()
+
+    cur.execute("DELETE from addresses where oid = " + DeleteEntry.get())
+
+    DeleteEntry.delete(0, "end")
+    conn.commit()
+    conn.close()
+
 # create submit function for db
 def submit():
     conn = sqlite3.connect("address_book.db")
@@ -51,10 +62,11 @@ def query():
 
     print_records = ''
     for record in records:
-        print_records += str(record[0]) + ' ' + str(record[1]) + '\n'
+        print(record)
+        print_records += str(record[3]) + ' ' + str(record[1]) + '\n'
 
     query_label = Label(root, text=print_records)
-    query_label.grid(row=5, column=0, columnspan=2)
+    query_label.grid(row=8, column=0, columnspan=2)
 
     conn.commit()
     conn.close()
@@ -75,13 +87,22 @@ ZipcodeLabel.grid(row=2, column=0)
 ZipcodeEntry = Entry(root, width=30)
 ZipcodeEntry.grid(row=2, column=1, padx=20)
 
+DeleteLabel = Label(root, text="delete ID number")
+DeleteLabel.grid(row=5, column=0)
+DeleteEntry = Entry(root, width=30)
+DeleteEntry.grid(row=5, column=1)
+
 # create submit button
 SubmitBtn = Button(root, text="add record to database", command=submit)
-SubmitBtn.grid(row=3, column=0, columnspan=2)
+SubmitBtn.grid(row=4, column=0, columnspan=2)
 
 # create query button
 QueryBtn = Button(root, text="show records", command=query)
-QueryBtn.grid(row=4, column=0, columnspan=2)
+QueryBtn.grid(row=3, column=0, columnspan=2)
+
+# create delete button
+DeleteBtn = Button(root, text="delete records", command=delete)
+DeleteBtn.grid(row=7, column=0, columnspan=2)
 
 # commit changes
 conn.commit()
